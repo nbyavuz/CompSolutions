@@ -8,24 +8,28 @@
  */
 class Solution {
 
-private:
-    int findLen(ListNode *list) {
-        int i = 1;
-        for(; list->next; i++){
-            list = list->next;
-        }
-        return i;
-    }
-
 public:
     ListNode *addTwoNumbers(ListNode *list1, ListNode *list2) {
 
-        int len1 = findLen(list1);
-        int len2 = findLen(list2);
+        int sum = 0;
+        ListNode *head = NULL;
+        ListNode **solList = &head;
+        while (list1 || list2 || sum > 0) {
 
-        std:cout << "Len 1 = " << len1 << " Len 2 = " << len2 << std::endl;
-        return NULL;
+            if (list1) {
+                sum += list1->val;
+                list1 = list1->next;
+            }
 
+            if (list2) {
+                sum += list2->val;
+                list2 = list2->next;
+            }
 
+            *solList = new ListNode(sum % 10);
+            solList = &((*solList)->next);
+            sum /= 10;
+        }
+        return head;
     }
 };
